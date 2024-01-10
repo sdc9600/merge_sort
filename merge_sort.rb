@@ -1,23 +1,20 @@
 require 'pry-byebug'
 array = [3, 2, 1, 13, 8, 5, 0, 1]
-array_copy = array
 
-def merge_sort(array, array_copy = array, start = 0, mid = (array.length / 2) - 1.floor, final = array.length - 1)
-  #binding.pry
+def merge_sort(array, start = 0, mid = (array.length / 2) - 1.floor, final = array.length - 1)
   if array.length > 1
-   # binding.pry
-    left_array = array_copy[start..mid]
-    right_array = array_copy[mid + 1..final]
-    merge_sort(left_array)
-    merge_sort(right_array)
+    left_array = merge_sort(array[start..mid])
+    right_array = merge_sort(array[mid + 1..final])
     merge(left_array, right_array)
-    p array_copy
+  else
+    array
   end
 end
 
-def merge(array = [], left_array, right_array)
+def merge(left_array, right_array)
   i = 0
   j = 0
+  array = []
   until array.length == left_array.length + right_array.length do
     if left_array[i] == nil
       array.append(right_array[j..right_array.length - 1]).flatten!
@@ -31,8 +28,7 @@ def merge(array = [], left_array, right_array)
       j += 1
     end
   end
-  p array
-  return array
+  array
 end
 
-merge_sort(array)
+p merge_sort(array)
